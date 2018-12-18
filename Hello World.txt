@@ -1,0 +1,93 @@
+import UIKit
+import CoreData
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    var window: UIWindow?
+
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        //定义窗口，创建UIWindows对象
+        window = UIWindow(frame: UIScreen.main.bounds)
+        //设置window的根视图控制器为ViewController
+        window?.rootViewController = ViewController()
+        //显示window
+        window?.makeKeyAndVisible()
+        
+        
+        return true
+    }
+
+//
+//  ViewController.swift
+//  fifth
+//
+//  Created by student on 2018/10/27.
+//  Copyright ? 2018年 huhu. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+
+    //声明UILabel对象
+    var label:UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        //设置根视图背景色
+        self.view.backgroundColor = UIColor.orange
+        
+        //创建UILabel对象
+        label = UILabel(frame: CGRect(x: 100, y: 100, width: 100, height: 40))
+        //设置label文本
+        label.text = "Hello world!"
+        //文本居中
+        label.textAlignment = .center
+        //label居中
+        label.center = view.center
+        //将label加入到视图控制器中
+        view.addSubview(label)
+        
+        //创建UIButton 对象
+        let btn = UIButton(frame: CGRect(x: 155, y: 600, width: 100, height: 40))
+        //设置正常状态下按钮的标题,并居中
+        btn.setTitle("Click me", for: UIControl.State.normal)
+        btn.titleLabel?.textAlignment = .center
+        //设置按钮边框宽度
+        btn.layer.borderWidth = 1
+        //设置正常状态下标题的颜色
+        btn.setTitleColor(UIColor.black, for: .normal)
+        //设置高亮状态下（被点击且未释放鼠标）标题的颜色
+        btn.setTitleColor(UIColor.white, for: .highlighted)
+        //给按钮添加target-action
+        btn.addTarget(self, action: #selector(clicked), for: .touchUpInside)
+        self.view.addSubview(btn)
+    
+        //创建UIImageView对象
+        let imageView = UIImageView(frame: CGRect(x: 10, y: 100, width: self.view.frame.width - 20, height: (self.view.frame.width - 20) * 0.618))
+        //获取图片资源路径
+        let path = Bundle.main.path(forResource: "sea", ofType: "jpg")
+        //以该路径创建图片
+        let image = UIImage(contentsOfFile: path!)
+        //将图片加入到imageView中
+        imageView.image = image
+        //将imageView加入到控制器中
+        self.view.addSubview(imageView)
+        
+    }
+    
+    // 按钮点击事件，改变label显示的文字
+    @objc func clicked() {
+        if label.text == "hello world" {
+            label.text = "I'm clicked"
+            label.textColor = UIColor.white
+        } else {
+            label.text = "hello world"
+            label.textColor = UIColor.black
+        }
+    }
+}
